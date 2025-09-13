@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useActionState } from 'react';
-import { BotMessageSquare, LoaderCircle, Sparkles, Copy, Trash2, Download } from 'lucide-react';
+import { BotMessageSquare, LoaderCircle, Sparkles, Copy, Download } from 'lucide-react';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -106,13 +106,6 @@ export function AppGenerator() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-  
-  const clearAll = () => {
-    setPrompt('');
-    localStorage.removeItem('generatedCode');
-    setGeneratedCode(null);
-    toast({ title: "Cleared", description: "The editor and preview have been cleared." });
-  };
 
 
   return (
@@ -147,11 +140,7 @@ export function AppGenerator() {
                   </div>
               </div>
               
-              <div className="mt-auto pt-4 space-y-3">
-                  <Button onClick={clearAll} type="button" variant="secondary" className="w-full">
-                      <Trash2 className="w-5 h-5 mr-2" />
-                      Clear All
-                  </Button>
+              <div className="mt-auto pt-4">
                   <Button type="submit" className="w-full font-bold py-3 text-lg bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transform hover:scale-[1.02] transition-transform" disabled={isPending || !prompt}>
                   {isPending ? (
                       <>
