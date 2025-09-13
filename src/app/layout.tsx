@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'CodeCraft AI',
+  title: 'AI Builder Studio',
   description: 'Turn your ideas into applications, powered by Gemini.',
 };
 

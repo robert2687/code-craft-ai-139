@@ -1,38 +1,30 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-
-// This is a workaround for highlight.js not having official types
-// for the global object.
-declare global {
-  interface Window {
-    hljs?: {
-      highlightElement: (element: HTMLElement) => void;
-    };
-  }
-}
+import Editor from '@monaco-editor/react';
+import { Skeleton } from '../ui/skeleton';
 
 interface CodeViewProps {
   code: string;
 }
 
 export function CodeView({ code }: CodeViewProps) {
-  const codeRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    // highlight.js is loaded from a CDN in layout.tsx
-    if (codeRef.current && window.hljs) {
-      window.hljs.highlightElement(codeRef.current);
-    }
-  }, [code]);
-
   return (
-    <div className="w-full h-full overflow-auto p-4">
-      <pre className="h-full">
-        <code ref={codeRef} className="language-html text-sm !bg-transparent !p-0 h-full">
-          {code}
-        </code>
-      </pre>
+    <div className="w-full h-full">
+      <Editor
+        height="100%"
+        language="html"
+        theme="vs-dark"
+        value={code}
+        loading={<Skeleton className="w-full h-full" />}
+        options={{
+          readOnly: true,
+          domReadOnly: true,
+          minimap: { enabled: false },
+          scrollBeyondLastLine: false,
+          fontSize: 14,
+          wordWrap: 'on',
+        }}
+      />
     </div>
   );
 }
