@@ -1,30 +1,18 @@
 import { AppGenerator } from '@/components/app/app-generator';
-import { Sidebar, SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export default function Home() {
   return (
-    <SidebarProvider>
-      <Sidebar />
-      <SidebarInset>
-        <div className="flex flex-col h-screen bg-background text-foreground antialiased">
-          <header className="bg-card/80 backdrop-blur-sm border-b border-border p-4 shadow-sm z-10 shrink-0">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">
-                  AI Builder Studio
-                </h1>
-              </div>
-              <p className="text-center text-muted-foreground text-sm">
-                Turn your ideas into applications, powered by Gemini.
-              </p>
-            </div>
-          </header>
+    <div className="flex flex-col h-screen bg-background text-foreground antialiased">
+      <header className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700 p-4 shadow-lg z-10 shrink-0">
+        <h1 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+            AI Builder Studio
+        </h1>
+        <p className="text-center text-gray-400 text-sm mt-1">Generate and edit applications in a professional IDE, powered by AI.</p>
+      </header>
 
-          <main className="flex-grow overflow-hidden relative">
-            <AppGenerator />
-          </main>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+      <main className="flex-grow overflow-hidden relative p-6">
+        <AppGenerator />
+      </main>
+    </div>
   );
 }
