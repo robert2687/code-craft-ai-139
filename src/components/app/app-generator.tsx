@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useActionState } from 'react';
 import { BotMessageSquare, LoaderCircle, Sparkles } from 'lucide-react';
 
@@ -26,6 +26,7 @@ const initialState: FormState = {
 };
 
 export function AppGenerator() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, isPending] = useActionState(generateAppAction, initialState);
   const { toast } = useToast();
 
@@ -51,6 +52,16 @@ export function AppGenerator() {
       }
     }
   }, [state, toast]);
+  
+  const handleTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!isPending && prompt && formRef.current) {
+        formRef.current.requestSubmit();
+      }
+    }
+  };
+
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 md:p-6 h-full">
@@ -60,15 +71,16 @@ export function AppGenerator() {
             <Sparkles className="text-primary" />
             <span>Describe Your App</span>
           </CardTitle>
-          <CardDescription>Be specific. Include features, look, and feel.</CardDescription>
+          <CardDescription>Be specific. Include features, look, and feel. Press Enter to submit, Shift+Enter for a new line.</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow flex flex-col gap-4">
-          <form action={formAction} className="flex-grow flex flex-col gap-4">
+          <form ref={formRef} action={formAction} className="flex-grow flex flex-col gap-4">
             <Textarea
               id="prompt-input"
               name="prompt"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
+              onKeyDown={handleTextareaKeyDown}
               className="w-full flex-grow p-4 bg-background/50 rounded-lg border-2 border-border focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200 resize-none min-h-[200px] text-base"
               placeholder="e.g., 'A simple to-do list app where I can add and delete items. The design should be dark and minimalist.'"
               required
