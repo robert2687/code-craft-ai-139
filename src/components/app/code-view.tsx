@@ -5,9 +5,10 @@ import { Skeleton } from '../ui/skeleton';
 
 interface CodeViewProps {
   code: string;
+  onCodeChange: (newCode: string | undefined) => void;
 }
 
-export function CodeView({ code }: CodeViewProps) {
+export function CodeView({ code, onCodeChange }: CodeViewProps) {
   return (
     <div className="w-full h-full">
       <Editor
@@ -15,10 +16,9 @@ export function CodeView({ code }: CodeViewProps) {
         language="html"
         theme="vs-dark"
         value={code}
+        onChange={onCodeChange}
         loading={<Skeleton className="w-full h-full" />}
         options={{
-          readOnly: true,
-          domReadOnly: true,
           minimap: { enabled: false },
           scrollBeyondLastLine: false,
           fontSize: 14,

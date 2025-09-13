@@ -57,7 +57,6 @@ export function AppGenerator() {
         title: "Generation Failed",
         description: state.error,
       });
-      // Do not clear on error so user can see previous code
     }
   }, [state, toast]);
 
@@ -68,7 +67,13 @@ export function AppGenerator() {
       setGeneratedCode(storedCode);
     }
   }, []);
-
+  
+  const handleCodeChange = (newCode: string | undefined) => {
+    if (newCode !== undefined) {
+      setGeneratedCode(newCode);
+      localStorage.setItem('generatedCode', newCode);
+    }
+  };
 
   const handleTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -198,7 +203,7 @@ export function AppGenerator() {
                 )}
               </TabsContent>
               <TabsContent value="code" className="w-full h-full overflow-hidden m-0">
-                {generatedCode && <CodeView code={generatedCode} />}
+                {generatedCode !== null && <CodeView code={generatedCode} onCodeChange={handleCodeChange} />}
               </TabsContent>
             </div>
           </Tabs>
